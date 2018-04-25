@@ -1,36 +1,39 @@
 const SpotifyWebHelper = require('spotify-web-helper');
-
+const jsonfile = require('jsonfile');
 const helper = SpotifyWebHelper();
+const schedule = require('node-schedule');
+var scheduledTracks = [];
 
-helper.player.on('error', err => {
-  if (error.message.match(/No user logged in/)) {
-    // also fires when Spotify client quits
-  } else {
-    // other errors: /Cannot start Spotify/ and /Spotify is not installed/
+const app = {
+
+  init: function(){
+    helper.player.on('error', err => {
+      if (error.message.match(/No user logged in/)) {
+        // also fires when Spotify client quits
+      } else {
+        // other errors: /Cannot start Spotify/ and /Spotify is not installed/
+      }
+    });
+    scheduledTracks = jsonfile.readFileSync('./schedule.json');
+  },
+
+  play: function(spotifyTrack, volume) {
+      var a = helper.player.play(spotifyTrack);
   }
-});
-helper.player.on('ready', () => {
 
-  // // Playback events
-  // helper.player.on('play', () => { });
-  // helper.player.on('pause', () => { });
-  // helper.player.on('seek', newPosition => {});
-  // helper.player.on('end', () => { });
-  // helper.player.on('track-will-change', track => {});
-  // helper.player.on('status-will-change', status => {});
+}
 
-  // Playback control. These methods return promises
-  var a = helper.player.play('spotify:track:2nWHzbBWBOePUvAImQv2So');
-  console.log(a);
-  helper.player.pause();
-  helper.player.seekTo(60); // 60 seconds
+app.init();
 
-  // Get current playback status, including up to date playing position
-  console.log(helper.status);
-  // 'status': {
-  //    'track': ...,
-  //    'shuffle': ...,
-  //    'playing_position': ...
-  //  }
+console.log(scheduledTracks);
 
+scheduledTracks.forEach(function(item){
+  console.log(item);
+  var result = schedule.scheduleJob(
+    item.cronSchedule,
+    () => {
+      console.log('play' + item.spotifyPlaylist);
+      app.play(item.spotifyPlaylist);
+    }
+    )
 });
