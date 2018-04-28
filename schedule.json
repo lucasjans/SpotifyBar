@@ -1,6 +1,31 @@
 [
-  {
-    "cronSchedule": "*/10 * * * * *",
-    "spotifyPlaylist": "spotify:user:lucasjans:playlist:2neNT9lT4POm3qDsm1cwJL"
-  }
+	{
+		"command": "pause",
+		"cronSchedule": "30 0 * * *"
+	},
+	{
+		"command": "play",
+		"cronSchedule": "30 5 * * *",
+		"spotifyPlaylist": "spotify:user:lucasjans:playlist:7MdAtyYwZ2CJYshYffz8pi"
+	},
+	{
+		"command": "play",
+		"cronSchedule": "0 10 * * *",
+		"spotifyPlaylist": "spotify:user:lucasjans:playlist:2g2MYrAT13jLFHeJ34uXhH"
+	},
+	{
+		"command": "play",
+		"cronSchedule": "30 14 * * *",
+		"spotifyPlaylist": "spotify:user:lacbsheehan:playlist:72x7yuoq1rYErndxwToSPY"
+	},
+	{
+		"command": "play",
+		"cronSchedule": "0 19 * * *",
+		"spotifyPlaylist": "spotify:user:lucasjans:playlist:36XQI7SAeGARIT5TPbjTyG"
+	},
+	{
+		"command": "play",
+		"cronSchedule": "0 23 * * *",
+		"spotifyPlaylist": "spotify:user:lucasjans:playlist:466i0STRVsAtcNxGBu7Dyq"
+	}
 ]

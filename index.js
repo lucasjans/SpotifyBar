@@ -5,8 +5,7 @@ const schedule = require('node-schedule');
 var scheduledTracks = [];
 
 const app = {
-
-  init: function(){
+  init: function() {
     helper.player.on('error', err => {
       if (error.message.match(/No user logged in/)) {
         // also fires when Spotify client quits
@@ -17,23 +16,27 @@ const app = {
     scheduledTracks = jsonfile.readFileSync('./schedule.json');
   },
 
-  play: function(spotifyTrack, volume) {
-      var a = helper.player.play(spotifyTrack);
+  play: function(spotifyTrack) {
+    var a = helper.player.play(spotifyTrack);
+  },
+  pause: function() {
+    var a = helper.player.pause();
   }
-
-}
+};
 
 app.init();
 
-console.log(scheduledTracks);
-
-scheduledTracks.forEach(function(item){
+scheduledTracks.forEach(function(item) {
   console.log(item);
-  var result = schedule.scheduleJob(
-    item.cronSchedule,
-    () => {
+  if (item.command === 'play') {
+    var result = schedule.scheduleJob(item.cronSchedule, () => {
       console.log('play' + item.spotifyPlaylist);
       app.play(item.spotifyPlaylist);
-    }
-    )
+    });
+  } else {
+    var result = schedule.scheduleJob(item.cronSchedule, () => {
+      console.log('pause time');
+      app.pause();
+    });
+  }
 });
